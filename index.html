@@ -459,46 +459,93 @@
     </div>
   </div>
 
-  <!-- 3. SCHÜLERORDNUNG -->
+  <!-- 3. SCHULGRUNDSÄTZE -->
   <div class="section" id="ordnung">
     <div class="section-header">
       <div class="section-icon" style="background:#fdf4ff; color:#7c3aed;">📋</div>
       <div>
-        <div class="section-title">Schülerordnung</div>
-        <div class="section-sub">Regeln für ein gutes Miteinander</div>
+        <div class="section-title">Schulgrundsätze &amp; Ordnung</div>
+        <div class="section-sub">Verbindliche Grundsätze der it.schule Stuttgart · Stand 01.08.2021</div>
       </div>
     </div>
-    <div class="card">
-      <ul class="ordnung-list">
-        <li>
-          <div class="ordnung-num">1</div>
-          <div>Pünktlichkeit ist Pflicht. Unterrichtsbeginn ist die maximale Verspätungsgrenze von 5 Minuten.</div>
-        </li>
-        <li>
-          <div class="ordnung-num">2</div>
-          <div>Mobiltelefone sind im Unterricht auf lautlos zu stellen und nur mit Erlaubnis der Lehrkraft zu nutzen.</div>
-        </li>
-        <li>
-          <div class="ordnung-num">3</div>
-          <div>Respektvoller Umgang mit allen Personen – Mitschüler/-innen, Lehrkräften und Personal.</div>
-        </li>
-        <li>
-          <div class="ordnung-num">4</div>
-          <div>Klassenräume sind sauber zu hinterlassen. Abfall gehört in die dafür vorgesehenen Behälter.</div>
-        </li>
-        <li>
-          <div class="ordnung-num">5</div>
-          <div>Fehlen muss am ersten Tag telefonisch im Sekretariat gemeldet werden. Eine schriftliche Entschuldigung ist bis spätestens 3 Tage nach der Rückkehr vorzulegen.</div>
-        </li>
-        <li>
-          <div class="ordnung-num">6</div>
-          <div>Das Rauchen und der Konsum von Alkohol oder anderen Drogen ist auf dem gesamten Schulgelände verboten.</div>
-        </li>
-        <li>
-          <div class="ordnung-num">7</div>
-          <div>Schulisches Eigentum (Bücher, Geräte) ist sorgsam zu behandeln. Beschädigungen sind umgehend zu melden.</div>
-        </li>
-      </ul>
+
+    <!-- Kategorien-Grid -->
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap:16px;">
+
+      <!-- Unterricht & Pünktlichkeit -->
+      <div class="card">
+        <div style="font-weight:600; margin-bottom:10px; display:flex; align-items:center; gap:8px;">
+          <span style="background:#eff6ff;color:#2563eb;border-radius:8px;padding:4px 8px;">📚 Unterricht</span>
+        </div>
+        <ul class="ordnung-list" style="gap:8px;">
+          <li><div class="ordnung-num">1</div><div>Pünktlichkeit pflegen; bei Verhinderung die Schule unverzüglich benachrichtigen.</div></li>
+          <li><div class="ordnung-num">2</div><div>Aufmerksamkeit und Engagement im Unterricht; Stoff sorgfältig vor- und nachbereiten.</div></li>
+          <li><div class="ordnung-num">3</div><div>Die Teilnahme am Unterricht ist eine wichtige Pflicht.</div></li>
+        </ul>
+      </div>
+
+      <!-- Miteinander -->
+      <div class="card">
+        <div style="font-weight:600; margin-bottom:10px; display:flex; align-items:center; gap:8px;">
+          <span style="background:#f0fdf4;color:#16a34a;border-radius:8px;padding:4px 8px;">🤝 Miteinander</span>
+        </div>
+        <ul class="ordnung-list" style="gap:8px;">
+          <li><div class="ordnung-num">1</div><div>Höflicher Umgang und gegenseitiger Respekt mit allen Beteiligten.</div></li>
+          <li><div class="ordnung-num">2</div><div>Nicht kritisieren, ohne den Sachverhalt genau zu kennen.</div></li>
+          <li><div class="ordnung-num">3</div><div>Im Konflikt: ehrlich, offen und fair das Gespräch suchen.</div></li>
+          <li><div class="ordnung-num">4</div><div>Sauberkeit im Schulgebäude; Einrichtungen sorgsam behandeln.</div></li>
+        </ul>
+      </div>
+
+      <!-- Fehlzeiten -->
+      <div class="card">
+        <div style="font-weight:600; margin-bottom:10px; display:flex; align-items:center; gap:8px;">
+          <span style="background:#fff7ed;color:#ea580c;border-radius:8px;padding:4px 8px;">📧 Fehlzeiten</span>
+        </div>
+        <ul class="ordnung-list" style="gap:8px;">
+          <li><div class="ordnung-num">1</div><div>Entschuldigungsmail spätestens am nächsten Werktag an Klassenlehrer + CC Ausbildungsbetrieb.<br><small style="color:var(--muted);">Betreff: „Fehlen Max Mustermann Klasse E1XY1T"</small></div></li>
+          <li><div class="ordnung-num">2</div><div>Minderjährige: zusätzlich schriftliche Entschuldigung der Erziehungsberechtigten innerhalb von 3 Kalendertagen.</div></li>
+          <li><div class="ordnung-num">3</div><div>Unentschuldigtes Versäumen einer Klassenarbeit → Note „ungenügend".</div></li>
+          <li><div class="ordnung-num">4</div><div>Alternativ: Fax 0711.216.89279 · Tel. 0711.216.89222</div></li>
+        </ul>
+      </div>
+
+      <!-- Rauchen & Cafeteria -->
+      <div class="card">
+        <div style="font-weight:600; margin-bottom:10px; display:flex; align-items:center; gap:8px;">
+          <span style="background:#fef2f2;color:#dc2626;border-radius:8px;padding:4px 8px;">🚭 Rauchen &amp; Cafeteria</span>
+        </div>
+        <ul class="ordnung-list" style="gap:8px;">
+          <li><div class="ordnung-num">1</div><div>Das Schulgebäude ist <strong>rauchfrei</strong>. Raucherzone: überdachter Bereich UG Süd. E-Zigaretten/E-Shishas nur dort.</div></li>
+          <li><div class="ordnung-num">2</div><div>Speisen und Getränke nur in der Cafeteria – nicht in Unterrichtsräumen.</div></li>
+          <li><div class="ordnung-num">3</div><div>Tische und Stühle sauber hinterlassen.</div></li>
+        </ul>
+      </div>
+
+      <!-- Elektronische Medien -->
+      <div class="card">
+        <div style="font-weight:600; margin-bottom:10px; display:flex; align-items:center; gap:8px;">
+          <span style="background:#f5f3ff;color:#7c3aed;border-radius:8px;padding:4px 8px;">💻 Elektronische Medien</span>
+        </div>
+        <ul class="ordnung-list" style="gap:8px;">
+          <li><div class="ordnung-num">1</div><div>Störungsfreie Lernumgebung hat höchste Priorität.</div></li>
+          <li><div class="ordnung-num">2</div><div>Private Nutzung von Smartphones, Tablets, Notebooks während des Unterrichts nicht erlaubt.</div></li>
+          <li><div class="ordnung-num">3</div><div>Über Geräteeinsatz für Unterrichtszwecke entscheiden die Lehrerinnen und Lehrer.</div></li>
+          <li><div class="ordnung-num">4</div><div>IT-Infrastruktur der Schule darf nur für schulische Zwecke genutzt werden (Nutzungsordnung).</div></li>
+        </ul>
+      </div>
+
+      <!-- Leitbild -->
+      <div class="card" style="background:var(--primary-light); border-color:#bfdbfe;">
+        <div style="font-weight:600; margin-bottom:10px; color:var(--primary);">🎯 Leitbild it.schule Stuttgart</div>
+        <p style="font-size:0.85rem; color:var(--text); line-height:1.6;">
+          <strong>Unterricht:</strong> Wir fördern fachliche Qualifikation, persönliche Entwicklung und soziale Kompetenz.<br><br>
+          <strong>Schul- &amp; Klassenklima:</strong> Unsere Schule ist ein Ort des Lernens in motivierender Atmosphäre bei gegenseitiger Wertschätzung.<br><br>
+          <strong>Ergebnisse:</strong> Schülerinnen und Schüler verlassen die Schule als reife, selbständige Persönlichkeiten mit Eigenverantwortung und Leistungswillen.
+        </p>
+        <p style="font-size:0.75rem; color:var(--muted); margin-top:10px;">Unterzeichnet: Florian Leopold, Schulleiter · 01.08.2021</p>
+      </div>
+
     </div>
   </div>
 
@@ -689,7 +736,7 @@
     <div class="info-grid">
       <div class="info-card">
         <h3>📍 Schuladresse</h3>
-        <p>ITS Stuttgart<br>70173 Stuttgart<br><br>Tel: (0711) 216-89222<br>vorname.nachname@its-stuttgart.de</p>
+        <p>it.schule Stuttgart<br>Zentrum für Informations- und Medientechnik<br>Hackstraße 4 · 70190 Stuttgart<br><br>Tel: (0711) 216-89222<br>Fax: 0711.216.89279<br>vorname.nachname@its-stuttgart.de</p>
       </div>
       <div class="info-card">
         <h3>🕐 Sekretariat</h3>
