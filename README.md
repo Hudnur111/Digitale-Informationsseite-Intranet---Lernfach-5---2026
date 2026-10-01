@@ -1,2 +1,2 @@
-# Digitale-Informationsseite-Intranet---Lernfach-5---2026
+# Digitale-Informationsseite-Intranet
 Intranet Web Anwendung

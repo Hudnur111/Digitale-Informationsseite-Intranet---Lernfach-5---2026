@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schulintranet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/*CSS Variablen für Farbe*/
+    :root {                     
+      --bg: #f5f6fa;
+      --surface: #ffffff;
+      --border: #e2e5ec;
+      --primary: #2563eb;
+      --primary-light: #eff6ff;
+      --text: #1e2532;
+      --muted: #6b7280;
+      --accent-green: #16a34a;
+      --accent-orange: #ea580c;
+      --accent-purple: #7c3aed;
+      --accent-red: #dc2626;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;        /* Body Config */
+    }
+
+    /* NAV */
+    nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-logo svg { width: 24px; height: 24px; }
+    .nav-links {
+      display: flex;
+      gap: 4px;
+    }
+    .nav-links a {
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .nav-links a:hover { background: var(--bg); color: var(--text); }
+    .nav-links a.active { background: var(--primary-light); color: var(--primary); }
+
+    /* MAIN */
+    main {
+      max-width: 1100px;        /* Seitenbreite */
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, #1d4ed8 100%);
+      color: white;
+      border-radius: var(--radius);
+      padding: 36px 40px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .hero h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 6px; }
+    .hero p { font-size: 0.95rem; opacity: 0.85; }
+    .hero-date {
+      background: rgba(255,255,255,0.15);
+      border-radius: 8px;
+      padding: 12px 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .hero-date .day { font-size: 2rem; font-weight: 700; line-height: 1; }
+    .hero-date .month { font-size: 0.8rem; opacity: 0.85; margin-top: 2px; }
+
+    /* SECTION HEADER */
+    .section { margin-bottom: 40px; }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .section-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .section-title { font-size: 1.1rem; font-weight: 600; }
+    .section-sub { font-size: 0.8rem; color: var(--muted); margin-top: 1px; }
+
+    /* CARDS */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+
+    /* GRID */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    /* NEWS */
+    .news-list { display: flex; flex-direction: column; gap: 12px; }
+    .news-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .news-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--primary);
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+    .news-item h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
+    .news-item p { font-size: 0.85rem; color: var(--muted); }
+    .news-date { font-size: 0.75rem; color: var(--muted); margin-top: 6px; }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+    .badge-new { background: #fef3c7; color: #b45309; }
+
+    /* CONTACTS */
+    .contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .contact-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .contact-name { font-size: 0.9rem; font-weight: 600; }
+    .contact-role { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+    .contact-phone { font-size: 0.8rem; color: var(--primary); margin-top: 4px; font-weight: 500; }
+
+    /* TERMINE */
+    .termine-list { display: flex; flex-direction: column; gap: 10px; }
+    .termin-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .termin-date-box {
+      text-align: center;
+      min-width: 48px;
+    }
+    .termin-day { font-size: 1.3rem; font-weight: 700; line-height: 1; }
+    .termin-month { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; }
+    .termin-divider { width: 1px; height: 36px; background: var(--border); }
+    .termin-title { font-size: 0.9rem; font-weight: 600; }
+    .termin-cat { font-size: 0.75rem; color: var(--muted); margin-top: 3px; }
+    .termin-tag {
+      margin-left: auto;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .tag-ferien { background: #dcfce7; color: var(--accent-green); }
+    .tag-pruefung { background: #fee2e2; color: var(--accent-red); }
+    .tag-event { background: #ede9fe; color: var(--accent-purple); }
+
+    /* STUNDENPLAN */
+    .stundenplan-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .stundenplan-table th {
+      padding: 10px 12px;
+      background: var(--bg);
+      font-weight: 600;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .stundenplan-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .stundenplan-table tr:last-child td { border-bottom: none; }
+    .fach-pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    /* WEGWEISER */
+    .wegweiser-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .weg-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      text-align: center;
+    }
+    .weg-icon { font-size: 2rem; margin-bottom: 8px; }
+    .weg-title { font-size: 0.9rem; font-weight: 600; }
+    .weg-desc { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+
+    /* ORDNUNG */
+    .ordnung-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .ordnung-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 0.9rem;
+      padding: 12px 16px;
+      background: var(--bg);
+      border-radius: 8px;
+    }
+    .ordnung-num {
+      width: 24px; height: 24px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* INFO */
+    .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+    .info-card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; }
+    .info-card p, .info-card li { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
+    .info-card ul { padding-left: 16px; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {                           /* Media Query für mobile Ansicht */
+      .grid-2, .grid-3, .contact-grid, .wegweiser-grid, .info-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hero { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+    Schulintranet
+  </div>
+  <div class="nav-links">
+    <a href="#wegweiser" class="active">Wegweiser</a>
+    <a href="#kontakte">Kontakte</a>
+    <a href="#ordnung">Ordnung</a>
+    <a href="#termine">Termine</a>
+    <a href="#news">News</a>
+    <a href="#stundenplan">Stundenplan</a>
+    <a href="#info">Info</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <h1>Willkommen im Schulintranet</h1>
+      <p>Alle wichtigen Informationen für Schülerinnen und Schüler an einem Ort.</p>
+    </div>
+    <div class="hero-date">
+      <div class="day" id="hero-day">—</div>
+      <div class="month" id="hero-month">—</div>
+    </div>
+  </div>
+
+  <!-- 1. WEGWEISER / AUSSCHILDERUNG -->          /* Emojji für Wegweiser */ /* Mit Hilfe von AI erstellt */
+  <div class="section" id="wegweiser">
+    <div class="section-header">
+      <div class="section-icon" style="background:#eff6ff; color:#2563eb;">🗺️</div>
+      <div>
+        <div class="section-title">Wegweiser & Schulräume</div>
+        <div class="section-sub">Klassenzimmer, Fachräume und wichtige Orte</div>
+      </div>
+    </div>
+    <div class="wegweiser-grid">
+      <div class="weg-card">
+        <div class="weg-icon">🏫</div>
+        <div class="weg-title">Hauptgebäude</div>
+        <div class="weg-desc">Eingang, Sekretariat, Lehrerzimmer – Erdgeschoss</div>
+      </div>
+      <div class="weg-card">
+        <div class="weg-icon">📚</div>
+        <div class="weg-title">Klassenräume</div>
+        <div class="weg-desc">Räume 101–120 im 1. OG, 201–220 im 2. OG</div>
+      </div>
+      <div class="weg-card">
+        <div class="weg-icon">💻</div>
+        <div class="weg-title">EDV-Räume</div>
+        <div class="weg-desc">PC-Pool A und B – Raum 115 und 116</div>
+      </div>
+      <div class="weg-card">
+        <div class="weg-icon">🍽️</div>
+        <div class="weg-title">Mensa</div>
+        <div class="weg-desc">Untergeschoss, Zugang über Treppenhaus B</div>
+      </div>
+      <div class="weg-card">
+        <div class="weg-icon">🚑</div>
+        <div class="weg-title">Erste Hilfe</div>
+        <div class="weg-desc">Verbandkasten beim Sekretariat – Raum 002</div>
+      </div>
+      <div class="weg-card">
+        <div class="weg-icon">🚌</div>
+        <div class="weg-title">Bushaltestelle</div>
+        <div class="weg-desc">Haupteingang, Linien 12, 45 und Schulbus</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. KONTAKTE -->
+  <div class="section" id="kontakte">
+    <div class="section-header">
+      <div class="section-icon" style="background:#f0fdf4; color:#16a34a;">📞</div>
+      <div>
+        <div class="section-title">Wichtige Kontakte</div>
+        <div class="section-sub">Telefonbuch der Schule</div>
+      </div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-avatar">SK</div>
+        <div>
+          <div class="contact-name">Sekretariat</div>
+          <div class="contact-role">Allgemeine Anfragen</div>
+          <div class="contact-phone">📞 0711 / 123 456-0</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-avatar">SL</div>
+        <div>
+          <div class="contact-name">Schulleitung</div>
+          <div class="contact-role">Direktor / Direktorin</div>
+          <div class="contact-phone">📞 0711 / 123 456-10</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-avatar">SB</div>
+        <div>
+          <div class="contact-name">Schulsozialarbeit</div>
+          <div class="contact-role">Beratung & Unterstützung</div>
+          <div class="contact-phone">📞 0711 / 123 456-20</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-avatar">IT</div>
+        <div>
+          <div class="contact-name">IT-Support</div>
+          <div class="contact-role">Technische Probleme</div>
+          <div class="contact-phone">📞 0711 / 123 456-30</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-avatar">HM</div>
+        <div>
+          <div class="contact-name">Hausverwaltung</div>
+          <div class="contact-role">Gebäude & Ausstattung</div>
+          <div class="contact-phone">📞 0711 / 123 456-40</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-avatar">BS</div>
+        <div>
+          <div class="contact-name">Bibliothek</div>
+          <div class="contact-role">Ausleihe & Medien</div>
+          <div class="contact-phone">📞 0711 / 123 456-50</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. SCHÜLERORDNUNG -->
+  <div class="section" id="ordnung">
+    <div class="section-header">
+      <div class="section-icon" style="background:#fdf4ff; color:#7c3aed;">📋</div>
+      <div>
+        <div class="section-title">Schülerordnung</div>
+        <div class="section-sub">Regeln für ein gutes Miteinander</div>
+      </div>
+    </div>
+    <div class="card">
+      <ul class="ordnung-list">
+        <li>
+          <div class="ordnung-num">1</div>
+          <div>Pünktlichkeit ist Pflicht. Unterrichtsbeginn ist die maximale Verspätungsgrenze von 5 Minuten.</div>
+        </li>
+        <li>
+          <div class="ordnung-num">2</div>
+          <div>Mobiltelefone sind im Unterricht auf lautlos zu stellen und nur mit Erlaubnis der Lehrkraft zu nutzen.</div>
+        </li>
+        <li>
+          <div class="ordnung-num">3</div>
+          <div>Respektvoller Umgang mit allen Personen – Mitschüler/-innen, Lehrkräften und Personal.</div>
+        </li>
+        <li>
+          <div class="ordnung-num">4</div>
+          <div>Klassenräume sind sauber zu hinterlassen. Abfall gehört in die dafür vorgesehenen Behälter.</div>
+        </li>
+        <li>
+          <div class="ordnung-num">5</div>
+          <div>Fehlen muss am ersten Tag telefonisch im Sekretariat gemeldet werden. Eine schriftliche Entschuldigung ist bis spätestens 3 Tage nach der Rückkehr vorzulegen.</div>
+        </li>
+        <li>
+          <div class="ordnung-num">6</div>
+          <div>Das Rauchen und der Konsum von Alkohol oder anderen Drogen ist auf dem gesamten Schulgelände verboten.</div>
+        </li>
+        <li>
+          <div class="ordnung-num">7</div>
+          <div>Schulisches Eigentum (Bücher, Geräte) ist sorgsam zu behandeln. Beschädigungen sind umgehend zu melden.</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4. TERMINE -->
+  <div class="section" id="termine">
+    <div class="section-header">
+      <div class="section-icon" style="background:#fff7ed; color:#ea580c;">📅</div>
+      <div>
+        <div class="section-title">Wichtige Termine</div>
+        <div class="section-sub">Veranstaltungen, Ferien und Prüfungen</div>
+      </div>
+    </div>
+    <div class="termine-list">
+      <div class="termin-item">
+        <div class="termin-date-box">
+          <div class="termin-day">25</div>
+          <div class="termin-month">Okt</div>
+        </div>
+        <div class="termin-divider"></div>
+        <div>
+          <div class="termin-title">Herbstferien Beginn</div>
+          <div class="termin-cat">Schuljahr 2026/27</div>
+        </div>
+        <span class="termin-tag tag-ferien">Ferien</span>
+      </div>
+      <div class="termin-item">
+        <div class="termin-date-box">
+          <div class="termin-day">10</div>
+          <div class="termin-month">Nov</div>
+        </div>
+        <div class="termin-divider"></div>
+        <div>
+          <div class="termin-title">Schulkonzert</div>
+          <div class="termin-cat">Aula, 18:00 Uhr</div>
+        </div>
+        <span class="termin-tag tag-event">Veranstaltung</span>
+      </div>
+      <div class="termin-item">
+        <div class="termin-date-box">
+          <div class="termin-day">20</div>
+          <div class="termin-month">Nov</div>
+        </div>
+        <div class="termin-divider"></div>
+        <div>
+          <div class="termin-title">Zwischenprüfungen – Lernfeld 3 & 4</div>
+          <div class="termin-cat">Klassen BS11a, BS11b</div>
+        </div>
+        <span class="termin-tag tag-pruefung">Prüfung</span>
+      </div>
+      <div class="termin-item">
+        <div class="termin-date-box">
+          <div class="termin-day">23</div>
+          <div class="termin-month">Dez</div>
+        </div>
+        <div class="termin-divider"></div>
+        <div>
+          <div class="termin-title">Weihnachtsferien Beginn</div>
+          <div class="termin-cat">Ende: 06. Januar 2027</div>
+        </div>
+        <span class="termin-tag tag-ferien">Ferien</span>
+      </div>
+      <div class="termin-item">
+        <div class="termin-date-box">
+          <div class="termin-day">15</div>
+          <div class="termin-month">Feb</div>
+        </div>
+        <div class="termin-divider"></div>
+        <div>
+          <div class="termin-title">Abschlussprüfungen – Schriftlich</div>
+          <div class="termin-cat">Alle Abschlussklassen</div>
+        </div>
+        <span class="termin-tag tag-pruefung">Prüfung</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. NEWS -->
+  <div class="section" id="news">
+    <div class="section-header">
+      <div class="section-icon" style="background:#fef9c3; color:#ca8a04;">📰</div>
+      <div>
+        <div class="section-title">Aktuelle News</div>
+        <div class="section-sub">Neuigkeiten aus der Schule</div>
+      </div>
+    </div>
+    <div class="news-list">
+      <div class="news-item">
+        <div class="news-dot" style="background:#16a34a;"></div>
+        <div>
+          <div style="display:flex; align-items:center;">
+            <h3>Neue EDV-Ausstattung in Raum 115</h3>
+            <span class="badge badge-new">Neu</span>
+          </div>
+          <p>Der PC-Pool im Raum 115 wurde vollständig erneuert. Alle Rechner verfügen nun über aktuelle Hardware und Software. Die Nutzung ist ab sofort möglich.</p>
+          <div class="news-date">01. Oktober 2026</div>
+        </div>
+      </div>
+      <div class="news-item">
+        <div class="news-dot"></div>
+        <div>
+          <h3>Elternsprechtag am 15. November</h3>
+          <p>Der nächste Elternsprechtag findet am 15. November 2026 von 14:00 bis 18:00 Uhr statt. Terminvereinbarungen sind über das Sekretariat möglich.</p>
+          <div class="news-date">28. September 2026</div>
+        </div>
+      </div>
+      <div class="news-item">
+        <div class="news-dot"></div>
+        <div>
+          <h3>Betriebspraktikum: Anmeldefrist läuft</h3>
+          <p>Die Anmeldefrist für das Betriebspraktikum im Frühjahr 2027 läuft bis zum 30. Oktober 2026. Formulare sind im Sekretariat erhältlich.</p>
+          <div class="news-date">20. September 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. STUNDENPLAN -->
+  <div class="section" id="stundenplan">
+    <div class="section-header">
+      <div class="section-icon" style="background:#f0f9ff; color:#0284c7;">🕐</div>
+      <div>
+        <div class="section-title">Stundenplan</div>
+        <div class="section-sub">Klasse BS11a – Musterplan</div>
+      </div>
+    </div>
+    <div class="card" style="overflow-x:auto;">
+      <table class="stundenplan-table">
+        <thead>
+          <tr>
+            <th>Zeit</th>
+            <th>Montag</th>
+            <th>Dienstag</th>
+            <th>Mittwoch</th>
+            <th>Donnerstag</th>
+            <th>Freitag</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:var(--muted); font-size:0.8rem;">07:45 – 09:15</td>
+            <td><span class="fach-pill">Deutsch</span></td>
+            <td><span class="fach-pill" style="background:#f0fdf4;color:#16a34a;">Mathematik</span></td>
+            <td><span class="fach-pill" style="background:#fdf4ff;color:#7c3aed;">Englisch</span></td>
+            <td><span class="fach-pill">Deutsch</span></td>
+            <td><span class="fach-pill" style="background:#fff7ed;color:#ea580c;">LF 5</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-size:0.8rem;">09:30 – 11:00</td>
+            <td><span class="fach-pill" style="background:#fff7ed;color:#ea580c;">LF 5</span></td>
+            <td><span class="fach-pill" style="background:#fdf4ff;color:#7c3aed;">Englisch</span></td>
+            <td><span class="fach-pill" style="background:#f0fdf4;color:#16a34a;">Mathematik</span></td>
+            <td><span class="fach-pill" style="background:#fff7ed;color:#ea580c;">LF 4</span></td>
+            <td><span class="fach-pill" style="background:#f0fdf4;color:#16a34a;">Sport</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-size:0.8rem;">11:15 – 12:45</td>
+            <td><span class="fach-pill" style="background:#fff7ed;color:#ea580c;">LF 4</span></td>
+            <td><span class="fach-pill" style="background:#fff7ed;color:#ea580c;">LF 5</span></td>
+            <td><span class="fach-pill">Sozialkunde</span></td>
+            <td><span class="fach-pill" style="background:#f0fdf4;color:#16a34a;">Mathematik</span></td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-size:0.8rem;">13:30 – 15:00</td>
+            <td>—</td>
+            <td>—</td>
+            <td><span class="fach-pill" style="background:#fff7ed;color:#ea580c;">LF 4</span></td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 7. ALLGEMEINE INFORMATIONEN -->
+  <div class="section" id="info">
+    <div class="section-header">
+      <div class="section-icon" style="background:#f1f5f9; color:#475569;">ℹ️</div>
+      <div>
+        <div class="section-title">Allgemeine Informationen</div>
+        <div class="section-sub">Nützliches für den Schulalltag</div>
+      </div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>📍 Schuladresse</h3>
+        <p>Musterstraße 1<br>70173 Stuttgart<br><br>Tel: 0711 / 123 456-0<br>info@schule.de</p>
+      </div>
+      <div class="info-card">
+        <h3>🕐 Schulzeiten</h3>
+        <p>
+          Mo – Fr: 07:30 – 17:00 Uhr<br>
+          Sekretariat: 07:30 – 13:00 Uhr<br>
+          Mensa: 11:30 – 13:30 Uhr<br>
+          Bibliothek: 08:00 – 15:00 Uhr
+        </p>
+      </div>
+      <div class="info-card">
+        <h3>💻 WLAN & IT</h3>
+        <p>WLAN-Netz: <strong>Schule-Guest</strong><br>Passwort: auf Anfrage im Sekretariat<br><br>IT-Probleme → Raum 116 oder<br>it-support@schule.de</p>
+      </div>
+      <div class="info-card">
+        <h3>🍽️ Mensa</h3>
+        <ul>
+          <li>Menü 1 (vegetarisch): ~4,00 €</li>
+          <li>Menü 2 (mit Fleisch): ~4,50 €</li>
+          <li>Tagessuppe: ~2,00 €</li>
+          <li>Zahlung nur mit Schulkarte</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>🚌 Busverbindungen</h3>
+        <ul>
+          <li>Linie 12 → Hauptbahnhof</li>
+          <li>Linie 45 → Stadtmitte</li>
+          <li>Schulbus → 07:15 Uhr ab ZOB</li>
+          <li>Rückfahrt: 15:10 Uhr</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>📦 Spinde</h3>
+        <p>Spindvergabe: Sekretariat<br>Schlüsselkaution: 5,00 €<br><br>Vergessener Schlüssel:<br>Ersatzschlüssel beim Hausmeister</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Schulintranet · Berufliche Schule · Stand Oktober 2026
+</footer>
+
+<script>            /*Live date in hero + Smooth scroll + Active nav link*/
+  // Live date in hero
+  const d = new Date();
+  const days = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+  const months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  document.getElementById('hero-day').textContent = d.getDate();
+  document.getElementById('hero-month').textContent = months[d.getMonth()] + ' ' + d.getFullYear();
+
+  // Smooth scroll + active nav
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  const sections = document.querySelectorAll('.section');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+</body>
+</html>
