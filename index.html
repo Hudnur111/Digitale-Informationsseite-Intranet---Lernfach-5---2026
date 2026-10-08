@@ -302,6 +302,97 @@
       margin-top: 40px;
     }
 
+    /* STUNDENPLAN */
+    .sp-select {
+      padding: 7px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      outline: none;
+    }
+    .sp-select:focus { border-color: var(--primary); }
+    .sp-badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .sp-tabs { display: flex; gap: 4px; margin-bottom: 16px; }
+    .sp-tab {
+      padding: 7px 16px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      transition: all 0.15s;
+    }
+    .sp-tab.active { background: var(--primary-light); color: var(--primary); border-color: var(--primary); }
+    .sp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      min-width: 580px;
+    }
+    .sp-table th {
+      padding: 10px 12px;
+      background: var(--bg);
+      font-weight: 600;
+      text-align: center;
+      border-bottom: 2px solid var(--border);
+      font-size: 0.82rem;
+    }
+    .sp-table th:first-child { text-align: left; }
+    .sp-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      vertical-align: middle;
+    }
+    .sp-table tr:last-child td { border-bottom: none; }
+    .sp-table td:first-child { text-align: left; color: var(--muted); font-size: 0.73rem; white-space: nowrap; padding-left: 16px; }
+    .sp-pill {
+      display: inline-block;
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-size: 0.73rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .sp-pill-cancel {
+      display: inline-block;
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-size: 0.73rem;
+      font-weight: 500;
+      white-space: nowrap;
+      background: #f3f4f6;
+      color: #9ca3af;
+      text-decoration: line-through;
+    }
+    .sp-pill-sub {
+      display: inline-block;
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-size: 0.73rem;
+      font-weight: 600;
+      white-space: nowrap;
+      background: #fff7ed;
+      color: #c2410c;
+      border: 1px dashed #fdba74;
+    }
+    .sp-pause-row td { background: var(--bg); color: var(--muted); font-size: 0.72rem; font-style: italic; padding: 3px 16px; }
+    .sp-today-col { background: #f8fbff; }
+    .sp-today-head { background: #eff6ff !important; color: var(--primary) !important; }
+    .sp-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 12px; font-size: 0.78rem; color: var(--muted); align-items: center; padding: 0 4px; }
+    .sp-legend span { display: flex; align-items: center; gap: 6px; }
+
     @media (max-width: 768px) {                           /* Media Query für mobile Ansicht */
       .grid-2, .grid-3, .contact-grid, .wegweiser-grid, .info-grid { grid-template-columns: 1fr; }
       .nav-links { display: none; }
@@ -322,6 +413,7 @@
     <a href="#kontakte">Kontakte</a>
     <a href="#ordnung">Ordnung</a>
     <a href="#termine">Termine</a>
+    <a href="#stundenplan">Stundenplan</a>
     <a href="#news">News</a>
     <a href="#duales-system">Duales System</a>
     <a href="#info">Info</a>
@@ -623,7 +715,104 @@
     </div>
   </div>
 
-  <!-- 5. NEWS -->
+  <!-- 5. STUNDENPLAN -->
+  <div class="section" id="stundenplan">
+    <div class="section-header">
+      <div class="section-icon" style="background:#f0f9ff; color:#0284c7;">🗓️</div>
+      <div>
+        <div class="section-title">Stundenplan</div>
+        <div class="section-sub">Demo-Simulation · Echtdaten via WebUntis API</div>
+      </div>
+    </div>
+
+    <div style="background:#fef9c3; border:1px solid #fde68a; border-radius:8px; padding:12px 16px; margin-bottom:16px; font-size:0.82rem; display:flex; align-items:flex-start; gap:10px;">
+      <span style="flex-shrink:0;">⚠️</span>
+      <div><strong>Demo-Modus:</strong> Simulierte Stunden- und Vertretungspläne der it.schule Stuttgart. Im Produktivbetrieb werden die Daten live über die <strong>WebUntis REST-API</strong> abgerufen (<code style="background:#fef3c7;padding:1px 5px;border-radius:4px;">GET /api/public/timetable?schoolName=its-stuttgart</code>).</div>
+    </div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+        <label for="sp-klasse" style="font-size:0.85rem; font-weight:600; white-space:nowrap;">Klasse:</label>
+        <select id="sp-klasse" class="sp-select">
+          <optgroup label="Technisches Gymnasium (TG)">
+            <option value="TGIE1">TGIE 1 – TG Informationstechnik Jgst. 1</option>
+            <option value="TGIE2">TGIE 2 – TG Informationstechnik Jgst. 2</option>
+          </optgroup>
+          <optgroup label="Berufskolleg (BK)">
+            <option value="1BK1T">1BK1T – Einjähriges BK I Technik</option>
+            <option value="1BK2T">1BK2T – Einjähriges BK II Technik</option>
+          </optgroup>
+          <optgroup label="Fachschule für Technik">
+            <option value="FTI1">FTI 1 – Fachrichtung IT Vollzeit</option>
+            <option value="FTITZ">FTI TZ – Fachrichtung IT Teilzeit</option>
+          </optgroup>
+          <optgroup label="Berufsschule – Fachinformatik (FI)">
+            <option value="E1FI1">E1FI1 – Fachinformatiker/in 1. Lehrjahr</option>
+            <option value="E2FI1">E2FI1 – Fachinformatiker/in 2. Lehrjahr</option>
+            <option value="E3FI1">E3FI1 – Fachinformatiker/in 3. Lehrjahr</option>
+          </optgroup>
+          <optgroup label="Berufsschule – weitere Ausbildungsberufe">
+            <option value="E1IT1">E1IT1 – IT-System-Elektroniker/in 1. Lj.</option>
+            <option value="E1IK1">E1IK1 – IT-System-Kaufmann/frau 1. Lj.</option>
+            <option value="E1IE1">E1IE1 – Informationselektroniker/in 1. Lj.</option>
+            <option value="D1MB">D1MB – Mediengestalter/in Bild &amp; Ton</option>
+            <option value="1BFI">1BFI – Einjährige BFS Informatik</option>
+          </optgroup>
+        </select>
+        <span id="sp-type-badge" class="sp-badge"></span>
+        <span id="sp-week-label" style="margin-left:auto; font-size:0.75rem; color:var(--muted);"></span>
+      </div>
+    </div>
+
+    <div class="sp-tabs">
+      <button class="sp-tab active" data-tab="plan" onclick="spTab('plan',this)">📅 Stundenplan</button>
+      <button class="sp-tab" data-tab="vtr" onclick="spTab('vtr',this)">🔄 Vertretung / Ausfälle</button>
+    </div>
+
+    <div id="sp-panel-plan">
+      <div class="card" style="overflow-x:auto; padding:0;">
+        <table class="sp-table">
+          <thead>
+            <tr>
+              <th style="width:120px; padding-left:16px;">Std. · Zeit</th>
+              <th id="sp-th-0">Montag</th>
+              <th id="sp-th-1">Dienstag</th>
+              <th id="sp-th-2">Mittwoch</th>
+              <th id="sp-th-3">Donnerstag</th>
+              <th id="sp-th-4">Freitag</th>
+            </tr>
+          </thead>
+          <tbody id="sp-tbody"></tbody>
+        </table>
+      </div>
+      <div class="sp-legend">
+        <span><span class="sp-pill" style="background:#eff6ff;color:#1d4ed8;">Fach</span> reguläre Stunde</span>
+        <span><span class="sp-pill-sub">Vtr. Fach</span> Vertretung</span>
+        <span><span class="sp-pill-cancel">Fach</span> Ausfall</span>
+      </div>
+    </div>
+
+    <div id="sp-panel-vtr" style="display:none;">
+      <div class="card" style="overflow-x:auto; padding:0;">
+        <table class="sp-table">
+          <thead>
+            <tr>
+              <th style="padding-left:16px; width:80px;">Tag</th>
+              <th style="width:80px;">Stunde</th>
+              <th>Fach</th>
+              <th>Art</th>
+              <th>Vertretung / Hinweis</th>
+              <th>Raum</th>
+            </tr>
+          </thead>
+          <tbody id="sp-vtr-tbody"></tbody>
+        </table>
+      </div>
+      <p style="font-size:0.78rem; color:var(--muted); margin-top:10px; padding:0 4px;">Vertretungsplan wird täglich aktualisiert · Quelle: WebUntis (Simulation)</p>
+    </div>
+  </div>
+
+  <!-- 6. NEWS -->
   <div class="section" id="news">
     <div class="section-header">
       <div class="section-icon" style="background:#fef9c3; color:#ca8a04;">📰</div>
@@ -810,6 +999,201 @@
     });
   }
   window.addEventListener('scroll', updateNav);
+
+// ── STUNDENPLAN ──────────────────────────────────────────────
+(function () {
+  const C = {
+    'Mathematik':     ['#eff6ff','#1d4ed8'],
+    'Deutsch':        ['#fff7ed','#c2410c'],
+    'Englisch':       ['#f0fdf4','#15803d'],
+    'Informatik':     ['#faf5ff','#7e22ce'],
+    'Physik':         ['#f0f9ff','#0369a1'],
+    'Sport':          ['#fef2f2','#b91c1c'],
+    'GK/Ethik':       ['#f0fdfa','#0f766e'],
+    'Technik&Mgmt':   ['#fff1f2','#be123c'],
+    'W&S':            ['#fefce8','#a16207'],
+    'Programmierung': ['#f5f3ff','#6d28d9'],
+    'Netzwerke':      ['#ecfeff','#0e7490'],
+    'Hardware':       ['#f8fafc','#475569'],
+    'Betriebssyst.':  ['#fdf4ff','#a21caf'],
+    'Datenbanken':    ['#fff7ed','#ea580c'],
+    'IT-Systeme':     ['#f0f9ff','#0284c7'],
+    'Projektkomp.':   ['#f0fdf4','#16a34a'],
+    'Mediengestalt.': ['#fdf4ff','#9333ea'],
+    'Bildtechnik':    ['#fef3c7','#d97706'],
+    'Audioprodukt.':  ['#ecfeff','#0891b2'],
+    'Wirtschaft':     ['#fefce8','#ca8a04'],
+    'IT-Kaufm.':      ['#eff6ff','#3b82f6'],
+    'Rechnungsw.':    ['#fff7ed','#f59e0b'],
+  };
+  const _ = '—';
+  // schedule[period 0-7][day 0=Mo..4=Fr]
+  const P = {
+    TGIE1:  { label:'TGIE 1', type:'TG',  tc:'#1d4ed8', s:[['Mathematik','Deutsch','Englisch','Informatik','Sport'],['Mathematik','Deutsch','Englisch','Informatik','Sport'],['Deutsch','Physik','Mathematik','Physik','GK/Ethik'],['Englisch','Physik','Mathematik','Physik',_],['Informatik','Technik&Mgmt','GK/Ethik','Technik&Mgmt',_],['Informatik','Technik&Mgmt',_,'Technik&Mgmt',_],[_,'Sport',_,_,_],[_,'Sport',_,_,_]] },
+    TGIE2:  { label:'TGIE 2', type:'TG',  tc:'#1d4ed8', s:[['Mathematik','Informatik','Englisch','Deutsch','Physik'],['Mathematik','Informatik','Englisch','Deutsch','Physik'],['Informatik','Deutsch','Physik','Mathematik','Sport'],['Informatik','GK/Ethik','Physik','Mathematik','Sport'],['Englisch','Technik&Mgmt','Mathematik','Informatik',_],['Englisch','Technik&Mgmt',_,'Informatik',_],[_,_,_,_,_],[_,_,_,_,_]] },
+    '1BK1T':{ label:'1BK1T',  type:'BK',  tc:'#0f766e', s:[['Mathematik','Englisch','Physik','Informatik','Deutsch'],['Mathematik','Englisch','Physik','Informatik','Deutsch'],['Deutsch','Mathematik','Informatik','Netzwerke','Sport'],['IT-Systeme','Mathematik','Informatik','Netzwerke','Sport'],['IT-Systeme','Hardware','W&S','Englisch',_],['Physik','Hardware',_,_,_],[_,_,_,_,_],[_,_,_,_,_]] },
+    '1BK2T':{ label:'1BK2T',  type:'BK',  tc:'#0f766e', s:[['Mathematik','Programmierung','Englisch','Physik','Deutsch'],['Mathematik','Programmierung','Englisch','Physik','Deutsch'],['Programmierung','Mathematik','Netzwerke','IT-Systeme','Sport'],['Programmierung','Englisch','Netzwerke','IT-Systeme','Sport'],['Hardware','W&S','Informatik','Mathematik',_],['Hardware',_,_,_,_],[_,_,_,_,_],[_,_,_,_,_]] },
+    FTI1:   { label:'FTI 1',  type:'FST', tc:'#7c3aed', s:[['Mathematik','Informatik','Netzwerke','Projektkomp.','Englisch'],['Mathematik','Informatik','Netzwerke','Projektkomp.','Englisch'],['Informatik','Programmierung','Datenbanken','Netzwerke','Mathematik'],['Informatik','Programmierung','Datenbanken','Netzwerke','Mathematik'],['Betriebssyst.','IT-Systeme','Projektkomp.','Informatik',_],['Betriebssyst.','IT-Systeme','Projektkomp.',_,_],[_,_,_,_,_],[_,_,_,_,_]] },
+    FTITZ:  { label:'FTI TZ', type:'FST', tc:'#7c3aed', s:[[_,'Informatik',_,'Netzwerke','Mathematik'],[_,'Informatik',_,'Netzwerke','Mathematik'],[_,'Programmierung',_,'Datenbanken','Informatik'],[_,'Programmierung',_,'Datenbanken','Informatik'],[_,'Betriebssyst.',_,'IT-Systeme','Projektkomp.'],[_,'Betriebssyst.',_,'IT-Systeme','Projektkomp.'],[_,_,_,_,_],[_,_,_,_,_]] },
+    E1FI1:  { label:'E1FI1',  type:'BS',  tc:'#ea580c', s:[['Informatik','W&S','Englisch','Netzwerke',_],['Informatik','W&S','Englisch','Netzwerke',_],['Programmierung','Informatik','Netzwerke','W&S',_],['Programmierung','Informatik','Hardware','Englisch',_],[_,_,_,_,_],[_,_,_,_,_],[_,_,_,_,_],[_,_,_,_,_]] },
+    E2FI1:  { label:'E2FI1',  type:'BS',  tc:'#ea580c', s:[['Programmierung','Datenbanken','W&S','IT-Systeme',_],['Programmierung','Datenbanken','W&S','IT-Systeme',_],['Netzwerke','Programmierung','Betriebssyst.','Englisch',_],['Netzwerke','IT-Systeme','Betriebssyst.','Englisch',_],[_,_,_,_,_],[_,_,_,_,_],[_,_,_,_,_],[_,_,_,_,_]] },
+    E3FI1:  { label:'E3FI1',  type:'BS',  tc:'#ea580c', s:[['Projektkomp.','Programmierung','Datenbanken','W&S',_],['Projektkomp.','Programmierung','Datenbanken','W&S',_],['IT-Systeme','Netzwerke','Programmierung','Englisch',_],['IT-Systeme','Betriebssyst.','Projektkomp.','Englisch',_],[_,_,_,_,_],[_,_,_,_,_],[_,_,_,_,_],[_,_,_,_,_]] },
+    E1IT1:  { label:'E1IT1',  type:'BS',  tc:'#0284c7', s:[['Hardware','W&S','Netzwerke','IT-Systeme',_],['Hardware','W&S','Netzwerke','IT-Systeme',_],['IT-Systeme','Hardware','Englisch','Betriebssyst.',_],['IT-Systeme','Netzwerke','Englisch','Betriebssyst.',_],[_,_,_,_,_],[_,_,_,_,_],[_,_,_,_,_],[_,_,_,_,_]] },
+    E1IK1:  { label:'E1IK1',  type:'BS',  tc:'#ca8a04', s:[['IT-Kaufm.','W&S','Rechnungsw.','Informatik',_],['IT-Kaufm.','W&S','Rechnungsw.','Informatik',_],['Wirtschaft','IT-Kaufm.','Englisch','W&S',_],['Wirtschaft','Rechnungsw.','Englisch','Informatik',_],[_,_,_,_,_],[_,_,_,_,_],[_,_,_,_,_],[_,_,_,_,_]] },
+    E1IE1:  { label:'E1IE1',  type:'BS',  tc:'#0284c7', s:[['Hardware','Netzwerke','W&S','IT-Systeme',_],['Hardware','Netzwerke','W&S','IT-Systeme',_],['IT-Systeme','Hardware','Informatik','Englisch',_],['Netzwerke','IT-Systeme','Informatik','Betriebssyst.',_],[_,_,_,_,_],[_,_,_,_,_],[_,_,_,_,_],[_,_,_,_,_]] },
+    D1MB:   { label:'D1MB',   type:'BS',  tc:'#9333ea', s:[['Mediengestalt.','W&S','Bildtechnik','Audioprodukt.',_],['Mediengestalt.','W&S','Bildtechnik','Audioprodukt.',_],['Bildtechnik','Mediengestalt.','Englisch','Informatik',_],['Audioprodukt.','Informatik','Englisch','W&S',_],[_,_,_,_,_],[_,_,_,_,_],[_,_,_,_,_],[_,_,_,_,_]] },
+    '1BFI': { label:'1BFI',   type:'BFS', tc:'#16a34a', s:[['Mathematik','Informatik','Englisch','Programmierung','Deutsch'],['Mathematik','Informatik','Englisch','Programmierung','Deutsch'],['Informatik','Netzwerke','Mathematik','IT-Systeme','Sport'],['Programmierung','W&S','Mathematik','Hardware','Sport'],['Hardware','Englisch','Informatik','W&S',_],['Netzwerke',_,_,_,_],[_,_,_,_,_],[_,_,_,_,_]] },
+  };
+
+  // Simulated substitutions per class [day 0-4, period 0-7, original, type:'cancel'|'sub', subInfo, room]
+  const VTR = {
+    TGIE1:  [[1,2,'Physik','cancel','Lehrkraft erkrankt','-'],[3,4,'Technik&Mgmt','sub','Vtr: Hr. Schmidt','115']],
+    TGIE2:  [[0,0,'Mathematik','sub','Vtr: Fr. Müller','202'],[2,2,'Physik','cancel','Raumausfall','-']],
+    '1BK1T':[[1,1,'Englisch','cancel','Lehrkraft erkrankt','-'],[3,3,'Netzwerke','sub','Vtr: Hr. Weber','116']],
+    '1BK2T':[[0,4,'W&S','cancel','Veranstaltung entfällt','-']],
+    FTI1:   [[2,2,'Datenbanken','sub','Vtr: Fr. Bauer','215'],[4,5,'Projektkomp.','cancel','Exkursion verschoben','-']],
+    FTITZ:  [[1,3,'Programmierung','cancel','Ausfall Teilzeit','-']],
+    E1FI1:  [[0,0,'Informatik','sub','Vtr: Hr. Fischer','116'],[2,2,'Netzwerke','cancel','Lehrkraft erkrankt','-']],
+    E2FI1:  [[1,1,'Datenbanken','cancel','Lehrkraft erkrankt','-'],[3,2,'Betriebssyst.','sub','Vtr: Hr. Maier','115']],
+    E3FI1:  [[0,3,'Programmierung','sub','Vtr: Fr. Hoffmann','215']],
+    E1IT1:  [[2,1,'Netzwerke','cancel','Raum gesperrt','-']],
+    E1IK1:  [[3,0,'Informatik','sub','Vtr: Hr. Lang','116'],[1,2,'Rechnungsw.','cancel','Lehrkraft erkrankt','-']],
+    E1IE1:  [[0,0,'Hardware','cancel','Ausfall','-']],
+    D1MB:   [[2,2,'Englisch','sub','Vtr: Fr. Klein','201']],
+    '1BFI': [[1,1,'Informatik','cancel','Lehrkraft erkrankt','-'],[3,3,'Hardware','sub','Vtr: Hr. Brandt','115']],
+  };
+
+  const TIMES = ['07:45 – 08:30','08:30 – 09:15','09:30 – 10:15','10:15 – 11:00','11:20 – 12:05','12:05 – 12:50','13:30 – 14:15','14:15 – 15:00'];
+  const ROWS  = [
+    {p:0,t:'1. · 07:45–08:30'},null,
+    {p:1,t:'2. · 08:30–09:15'},
+    {p:null,pause:'Pause 09:15–09:30'},
+    {p:2,t:'3. · 09:30–10:15'},
+    {p:3,t:'4. · 10:15–11:00'},
+    {p:null,pause:'Pause 11:00–11:20'},
+    {p:4,t:'5. · 11:20–12:05'},
+    {p:5,t:'6. · 12:05–12:50'},
+    {p:null,pause:'Mittagspause 12:50–13:30'},
+    {p:6,t:'7. · 13:30–14:15'},
+    {p:7,t:'8. · 14:15–15:00'},
+  ];
+  const DAYS_SHORT = ['Mo','Di','Mi','Do','Fr'];
+  const DAYS_LONG  = ['Montag','Dienstag','Mittwoch','Donnerstag','Freitag'];
+  const TYPE_COLORS = {TG:'#1d4ed8',BK:'#0f766e',FST:'#7c3aed',BS:'#ea580c',BFS:'#16a34a'};
+  const TYPE_LABELS = {TG:'TG',BK:'BK',FST:'Fachschule',BS:'Berufsschule',BFS:'BFS'};
+
+  function pill(subj, cancel, sub) {
+    if (!subj || subj === '—') return '<span style="color:#d1d5db;">–</span>';
+    if (cancel) return `<span class="sp-pill-cancel">${subj}</span>`;
+    if (sub)    return `<span class="sp-pill-sub">Vtr. ${subj}</span>`;
+    const cl = C[subj] || ['#f3f4f6','#6b7280'];
+    return `<span class="sp-pill" style="background:${cl[0]};color:${cl[1]};">${subj}</span>`;
+  }
+
+  function getKW(d) {
+    const dt = new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
+    const day = dt.getUTCDay() || 7; dt.setUTCDate(dt.getUTCDate()+4-day);
+    const y0 = new Date(Date.UTC(dt.getUTCFullYear(),0,1));
+    return Math.ceil((((dt-y0)/864e5)+1)/7);
+  }
+
+  function render(key) {
+    const pl = P[key]; if (!pl) return;
+    const vtr = VTR[key] || [];
+    const vtrSet = {}; // key: "day_period" → {type,subInfo,room,orig}
+    vtr.forEach(([d,p,orig,type,subInfo,room]) => { vtrSet[`${d}_${p}`] = {type,subInfo,room,orig}; });
+
+    const now = new Date();
+    const dow = now.getDay();
+    const todayIdx = (dow>=1&&dow<=5) ? dow-1 : -1;
+
+    // Badge
+    const badge = document.getElementById('sp-type-badge');
+    const tc = TYPE_COLORS[pl.type];
+    badge.textContent = TYPE_LABELS[pl.type];
+    badge.style.background = tc+'22'; badge.style.color = tc;
+
+    // Week label
+    const mon = new Date(now); mon.setDate(now.getDate()-(dow===0?6:dow-1));
+    const fri = new Date(mon); fri.setDate(mon.getDate()+4);
+    const fmt = d2 => d2.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'});
+    document.getElementById('sp-week-label').textContent = `KW ${getKW(now)} · ${fmt(mon)}–${fmt(fri)}`;
+
+    // Column headers
+    DAYS_LONG.forEach((d,i) => {
+      const th = document.getElementById('sp-th-'+i);
+      th.textContent = d;
+      th.className = i===todayIdx ? 'sp-today-head' : '';
+    });
+
+    // Stundenplan body
+    const tbody = document.getElementById('sp-tbody');
+    tbody.innerHTML = '';
+    [
+      {p:0,t:'1. · 07:45–08:30'},
+      {p:1,t:'2. · 08:30–09:15'},
+      {pause:'Pause 09:15–09:30'},
+      {p:2,t:'3. · 09:30–10:15'},
+      {p:3,t:'4. · 10:15–11:00'},
+      {pause:'Pause 11:00–11:20'},
+      {p:4,t:'5. · 11:20–12:05'},
+      {p:5,t:'6. · 12:05–12:50'},
+      {pause:'Mittagspause 12:50–13:30'},
+      {p:6,t:'7. · 13:30–14:15'},
+      {p:7,t:'8. · 14:15–15:00'},
+    ].forEach(row => {
+      const tr = document.createElement('tr');
+      if (row.pause !== undefined) {
+        tr.className = 'sp-pause-row';
+        tr.innerHTML = `<td colspan="6">${row.pause}</td>`;
+      } else {
+        const pIdx = row.p;
+        let html = `<td>${row.t}</td>`;
+        for (let d=0;d<5;d++) {
+          const subj = pl.s[pIdx][d];
+          const v = vtrSet[`${d}_${pIdx}`];
+          const tdCls = d===todayIdx ? ' class="sp-today-col"' : '';
+          html += `<td${tdCls}>${pill(subj, v&&v.type==='cancel', v&&v.type==='sub')}</td>`;
+        }
+        tr.innerHTML = html;
+      }
+      tbody.appendChild(tr);
+    });
+
+    // Vertretungsplan body
+    const vtrbody = document.getElementById('sp-vtr-tbody');
+    vtrbody.innerHTML = '';
+    if (vtr.length === 0) {
+      vtrbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px;">✅ Keine Ausfälle oder Vertretungen diese Woche.</td></tr>';
+    } else {
+      vtr.forEach(([d,p,orig,type,subInfo,room]) => {
+        const tr = document.createElement('tr');
+        const isCancel = type==='cancel';
+        tr.innerHTML = `
+          <td style="padding-left:16px;font-weight:600;">${DAYS_SHORT[d]}</td>
+          <td style="text-align:center;">${p+1}. Std.</td>
+          <td>${pill(orig,false,false)}</td>
+          <td>${isCancel
+            ? '<span class="sp-pill-cancel">Ausfall</span>'
+            : '<span class="sp-pill-sub">Vertretung</span>'}</td>
+          <td style="font-size:0.82rem;color:var(--muted);">${subInfo}</td>
+          <td style="font-size:0.82rem;color:var(--muted);">${room}</td>`;
+        vtrbody.appendChild(tr);
+      });
+    }
+  }
+
+  window.spTab = function(tab, btn) {
+    document.querySelectorAll('.sp-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('sp-panel-plan').style.display = tab==='plan' ? '' : 'none';
+    document.getElementById('sp-panel-vtr').style.display  = tab==='vtr'  ? '' : 'none';
+  };
+
+  const sel = document.getElementById('sp-klasse');
+  sel.addEventListener('change', () => render(sel.value));
+  render(sel.value);
+})();
 </script>
 </body>
 </html>
